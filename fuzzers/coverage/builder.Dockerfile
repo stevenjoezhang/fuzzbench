@@ -18,9 +18,10 @@ FROM $parent_image
 # The patch adds hook to dump clang coverage data when timeout.
 COPY patch.diff /
 
+ADD llvm-project /llvm-project
+
 # Use a libFuzzer version that supports clang source-based coverage.
-RUN git clone https://github.com/llvm/llvm-project.git /llvm-project && \
-    cd /llvm-project && \
+RUN cd /llvm-project && \
     git checkout 0b5e6b11c358e704384520dc036eddb5da1c68bf && \
     patch -p1 < /patch.diff && \
     cd /llvm-project/compiler-rt/lib/fuzzer && \
