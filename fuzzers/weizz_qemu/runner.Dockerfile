@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM gcr.io/fuzzbench/base-image
+FROM gcr.dockerproxy.com/fuzzbench/base-image
 
 RUN apt-get update -y && apt-get install -y libbfd-dev libunwind-dev
 

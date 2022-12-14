@@ -128,7 +128,7 @@ gsutil iam ch allUsers:objectViewer gs://$REPORT_BUCKET_NAME
 
 ```bash
 docker build -f docker/dispatcher-image/Dockerfile \
-    -t gcr.io/$PROJECT_NAME/dispatcher-image docker/dispatcher-image/
+    -t gcr.dockerproxy.com/$PROJECT_NAME/dispatcher-image docker/dispatcher-image/
 ```
 
 FuzzBench uses an instance running this image to manage most of the experiment.
@@ -139,7 +139,7 @@ to use the container registry.
 * Push `dispatcher-image` to the docker registry:
 
 ```bash
-docker push gcr.io/$PROJECT_NAME/dispatcher-image
+docker push gcr.dockerproxy.com/$PROJECT_NAME/dispatcher-image
 ```
 
 * [Switch the registry's visibility to public](https://console.cloud.google.com/gcr/settings).

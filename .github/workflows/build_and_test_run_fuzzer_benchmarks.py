@@ -56,8 +56,8 @@ def stop_docker_containers():
 
 def delete_docker_images():
     """Delete docker images."""
-    # TODO(metzman): Don't delete gcr.io/oss-fuzz-base/base-builder and
-    # gcr.io/fuzzbench/base-image so they don't need to be pulled for every
+    # TODO(metzman): Don't delete gcr.dockerproxy.com/oss-fuzz-base/base-builder and
+    # gcr.dockerproxy.com/fuzzbench/base-image so they don't need to be pulled for every
     # target.
 
     result = subprocess.run(['docker', 'ps', '-a', '-q'],

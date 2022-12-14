@@ -136,7 +136,7 @@ def _get_base_builder(dockerfile_path):
         lines = handle.readlines()
     for line in lines:
         line = line.strip()
-        if line.startswith('FROM gcr.io/oss-fuzz-base/base-builder'):
+        if line.startswith('FROM gcr.dockerproxy.com/oss-fuzz-base/base-builder'):
             return line[len('FROM '):]
 
     raise ValueError('Could not find base-builder')

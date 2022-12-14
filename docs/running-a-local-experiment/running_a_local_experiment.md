@@ -48,7 +48,7 @@ max_total_time: 86400
 # The location of the docker registry.
 # FIXME: Support custom docker registry.
 # See https://github.com/google/fuzzbench/issues/777
-docker_registry: gcr.io/fuzzbench
+docker_registry: gcr.dockerproxy.com/fuzzbench
 
 # The local experiment folder that will store most of the experiment data.
 # Please use an absolute path.

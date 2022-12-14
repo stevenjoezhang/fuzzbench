@@ -170,13 +170,13 @@ if your fuzz target binary is `$OUT/fuzz-target` the dictionary should be
 ### Dockerfile
 
 This file defines the steps to build the docker image for your benchmark.
-It should inherit from `gcr.io/oss-fuzz-base/base-builder` and do any one-time
+It should inherit from `gcr.dockerproxy.com/oss-fuzz-base/base-builder` and do any one-time
 setup needed to build your benchmark, but should not actually build the
 benchmark itself. It also should copy any files from the benchmark directory
 into the image that will be needed to build the benchmark.
 
 ```dockerfile
-FROM gcr.io/oss-fuzz-base/base-builder
+FROM gcr.dockerproxy.com/oss-fuzz-base/base-builder
 
 RUN apt-get update && \
     apt-get install -y \
@@ -236,7 +236,7 @@ Building benchmarks and fuzzers entails the following process:
 
 1. The benchmark image is built. This image is defined by
    `benchmarks/$BENCHMARK/Dockerfile`. It inherits from
-   `gcr.io/oss-fuzz-base/base-builder` which provides clang and other things
+   `gcr.dockerproxy.com/oss-fuzz-base/base-builder` which provides clang and other things
    needed by benchmarks (particular OSS-Fuzz benchmarks to build). Standard
    benchmarks (usually) inherit from the latest version of `base-builder`
    while OSS-Fuzz benchmarks (usually) inherit from the specific version of

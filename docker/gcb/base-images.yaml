@@ -15,8 +15,8 @@
 # made to the master branch.
 
 images:
-- gcr.io/fuzzbench/base-image:test-experiment
-- gcr.io/fuzzbench/base-image
+- gcr.dockerproxy.com/fuzzbench/base-image:test-experiment
+- gcr.dockerproxy.com/fuzzbench/base-image
 steps:
 - args:
   - pull
@@ -28,11 +28,11 @@ steps:
 - args:
   - build
   - --tag
-  - gcr.io/fuzzbench/base-image
+  - gcr.dockerproxy.com/fuzzbench/base-image
   - --tag
-  - gcr.io/fuzzbench/base-image:test-experiment
+  - gcr.dockerproxy.com/fuzzbench/base-image:test-experiment
   - --cache-from
-  - gcr.io/fuzzbench/base-image
+  - gcr.dockerproxy.com/fuzzbench/base-image
   - --build-arg
   - BUILDKIT_INLINE_CACHE=1
   - --file

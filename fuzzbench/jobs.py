@@ -16,7 +16,7 @@
 import os
 import subprocess
 
-BASE_TAG = 'gcr.io/fuzzbench'
+BASE_TAG = 'gcr.dockerproxy.com/fuzzbench'
 
 
 def build_image(image):

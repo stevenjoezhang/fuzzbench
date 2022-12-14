@@ -55,7 +55,7 @@ class TestReadAndValdiateExperimentConfig(unittest.TestCase):
             'experiment':
                 'experiment-name',
             'docker_registry':
-                'gcr.io/fuzzbench',
+                'gcr.dockerproxy.com/fuzzbench',
             'cloud_project':
                 'fuzzbench',
             'cloud_compute_zone':

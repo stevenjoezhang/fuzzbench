@@ -34,11 +34,11 @@ ARG benchmark
 
 # We take the already built builder image for the given fuzzer/benchmark pair
 # and refer to it as "builder", so we can copy the build artifacts from it.
-FROM gcr.io/fuzzbench/builders/$fuzzer/$benchmark AS builder
+FROM gcr.dockerproxy.com/fuzzbench/builders/$fuzzer/$benchmark AS builder
 
 # We base the runner image from the intermediate runner image, defined by the
 # runner.Dockerfile of each fuzzer.
-FROM gcr.io/fuzzbench/runners/$fuzzer/$benchmark-intermediate
+FROM gcr.dockerproxy.com/fuzzbench/runners/$fuzzer/$benchmark-intermediate
 
 # Install runtime dependencies for benchmarks.
 

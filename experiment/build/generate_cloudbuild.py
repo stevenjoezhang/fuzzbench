@@ -22,8 +22,8 @@ from common import yaml_utils
 from common.utils import ROOT_DIR
 from experiment.build import build_utils
 
-DOCKER_IMAGE = 'gcr.io/cloud-builders/docker'
-STANDARD_DOCKER_REGISTRY = 'gcr.io/fuzzbench'
+DOCKER_IMAGE = 'gcr.dockerproxy.com/cloud-builders/docker'
+STANDARD_DOCKER_REGISTRY = 'gcr.dockerproxy.com/fuzzbench'
 
 
 def _get_image_tag(image_specs,
@@ -48,11 +48,11 @@ def _get_image_tag(image_specs,
 def _get_gcb_image_tag(image_specs):
     """Returns an image tag for |image_specs| that can be used by other steps in
     GCB. This tag is needed because the docker images in FuzzBench inherit from
-    "gcr.io/fuzzbench/$PARENT" but the other tags for an image can't include
-    gcr.io/fuzzbench because they are used to name images that are actually
-    pushed to a registry, and not everyone can push to gcr.io/fuzzbench.
+    "gcr.dockerproxy.com/fuzzbench/$PARENT" but the other tags for an image can't include
+    gcr.dockerproxy.com/fuzzbench because they are used to name images that are actually
+    pushed to a registry, and not everyone can push to gcr.dockerproxy.com/fuzzbench.
     This tag should not actually be pushed since again not everyone can push to
-    gcr.io/fuzzbench.
+    gcr.dockerproxy.com/fuzzbench.
     """
     return _get_image_tag(image_specs, use_standard_registry=True)
 
@@ -103,7 +103,7 @@ def coverage_steps(benchmark):
             '.tar.gz * /src /work'
         ]
     }]
-    step = {'name': 'gcr.io/cloud-builders/gsutil'}
+    step = {'name': 'gcr.dockerproxy.com/cloud-builders/gsutil'}
     step['args'] = [
         '-m', 'cp', '/workspace/out/coverage-build-' + benchmark + '.tar.gz',
         coverage_binaries_dir + '/'

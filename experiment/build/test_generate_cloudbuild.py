@@ -39,20 +39,20 @@ def test_generate_cloudbuild_spec_build_base_image(experiment):
         'steps': [{
             'id': 'base-image',
             'env': ['DOCKER_BUILDKIT=1'],
-            'name': 'gcr.io/cloud-builders/docker',
+            'name': 'gcr.dockerproxy.com/cloud-builders/docker',
             'args': [
-                'build', '--tag', 'gcr.io/fuzzbench/base-image:test-experiment',
-                '--tag', 'gcr.io/fuzzbench/base-image', '--tag',
-                'gcr.io/fuzzbench/base-image', '--cache-from',
-                'gcr.io/fuzzbench/base-image', '--build-arg',
+                'build', '--tag', 'gcr.dockerproxy.com/fuzzbench/base-image:test-experiment',
+                '--tag', 'gcr.dockerproxy.com/fuzzbench/base-image', '--tag',
+                'gcr.dockerproxy.com/fuzzbench/base-image', '--cache-from',
+                'gcr.dockerproxy.com/fuzzbench/base-image', '--build-arg',
                 'BUILDKIT_INLINE_CACHE=1', '--file',
                 'docker/base-image/Dockerfile', 'docker/base-image'
             ],
             'wait_for': []
         }],
         'images': [
-            'gcr.io/fuzzbench/base-image:test-experiment',
-            'gcr.io/fuzzbench/base-image'
+            'gcr.dockerproxy.com/fuzzbench/base-image:test-experiment',
+            'gcr.dockerproxy.com/fuzzbench/base-image'
         ]
     }
 
@@ -61,9 +61,9 @@ def test_generate_cloudbuild_spec_build_base_image(experiment):
 
 def test_generate_cloudbuild_spec_other_registry(experiment):
     """Tests generation of cloud build configuration yaml for the base image
-    when a registry other than gcr.io/fuzzbench is specified.
+    when a registry other than gcr.dockerproxy.com/fuzzbench is specified.
     """
-    os.environ['DOCKER_REGISTRY'] = 'gcr.io/not-fuzzbench'
+    os.environ['DOCKER_REGISTRY'] = 'gcr.dockerproxy.com/not-fuzzbench'
     image_templates = {
         'base-image': {
             'dockerfile': 'docker/base-image/Dockerfile',
@@ -82,20 +82,20 @@ def test_generate_cloudbuild_spec_other_registry(experiment):
         'steps': [{
             'id': 'base-image',
             'env': ['DOCKER_BUILDKIT=1'],
-            'name': 'gcr.io/cloud-builders/docker',
+            'name': 'gcr.dockerproxy.com/cloud-builders/docker',
             'args': [
-                'build', '--tag', 'gcr.io/not-fuzzbench/base-image'
-                ':test-experiment', '--tag', 'gcr.io/fuzzbench/base-image',
-                '--tag', 'gcr.io/not-fuzzbench/base-image', '--cache-from',
-                'gcr.io/not-fuzzbench/base-image', '--build-arg',
+                'build', '--tag', 'gcr.dockerproxy.com/not-fuzzbench/base-image'
+                ':test-experiment', '--tag', 'gcr.dockerproxy.com/fuzzbench/base-image',
+                '--tag', 'gcr.dockerproxy.com/not-fuzzbench/base-image', '--cache-from',
+                'gcr.dockerproxy.com/not-fuzzbench/base-image', '--build-arg',
                 'BUILDKIT_INLINE_CACHE=1', '--file',
                 'docker/base-image/Dockerfile', 'docker/base-image'
             ],
             'wait_for': []
         }],
         'images': [
-            'gcr.io/not-fuzzbench/base-image:test-experiment',
-            'gcr.io/not-fuzzbench/base-image'
+            'gcr.dockerproxy.com/not-fuzzbench/base-image:test-experiment',
+            'gcr.dockerproxy.com/not-fuzzbench/base-image'
         ]
     }
 
@@ -108,7 +108,7 @@ def test_generate_cloudbuild_spec_build_fuzzer_benchmark(experiment):
     image_templates = {
         'afl-zlib-builder-intermediate': {
             'build_arg': [
-                'parent_image=gcr.io/fuzzbench/builders/benchmark/zlib'
+                'parent_image=gcr.dockerproxy.com/fuzzbench/builders/benchmark/zlib'
             ],
             'depends_on': ['zlib-project-builder'],
             'dockerfile': 'fuzzers/afl/builder.Dockerfile',
@@ -128,24 +128,24 @@ def test_generate_cloudbuild_spec_build_fuzzer_benchmark(experiment):
         'steps': [{
             'id': 'afl-zlib-builder-intermediate',
             'env': ['DOCKER_BUILDKIT=1'],
-            'name': 'gcr.io/cloud-builders/docker',
+            'name': 'gcr.dockerproxy.com/cloud-builders/docker',
             'args': [
                 'build', '--tag',
-                'gcr.io/fuzzbench/builders/afl/zlib-intermediate'
+                'gcr.dockerproxy.com/fuzzbench/builders/afl/zlib-intermediate'
                 ':test-experiment', '--tag',
-                'gcr.io/fuzzbench/builders/afl/zlib-intermediate', '--tag',
-                'gcr.io/fuzzbench/builders/afl/zlib-intermediate',
+                'gcr.dockerproxy.com/fuzzbench/builders/afl/zlib-intermediate', '--tag',
+                'gcr.dockerproxy.com/fuzzbench/builders/afl/zlib-intermediate',
                 '--cache-from',
-                'gcr.io/fuzzbench/builders/afl/zlib-intermediate',
+                'gcr.dockerproxy.com/fuzzbench/builders/afl/zlib-intermediate',
                 '--build-arg', 'BUILDKIT_INLINE_CACHE=1', '--build-arg',
-                'parent_image=gcr.io/fuzzbench/builders/benchmark/zlib',
+                'parent_image=gcr.dockerproxy.com/fuzzbench/builders/benchmark/zlib',
                 '--file', 'fuzzers/afl/builder.Dockerfile', 'fuzzers/afl'
             ],
             'wait_for': ['zlib-project-builder']
         }],
         'images': [
-            'gcr.io/fuzzbench/builders/afl/zlib-intermediate:test-experiment',
-            'gcr.io/fuzzbench/builders/afl/zlib-intermediate'
+            'gcr.dockerproxy.com/fuzzbench/builders/afl/zlib-intermediate:test-experiment',
+            'gcr.dockerproxy.com/fuzzbench/builders/afl/zlib-intermediate'
         ]
     }
     assert generated_spec == expected_spec
@@ -163,7 +163,7 @@ def test_generate_cloudbuild_spec_build_benchmark_coverage(experiment):
         },
         'coverage-zlib-builder-intermediate': {
             'build_arg': [
-                'parent_image=gcr.io/fuzzbench/builders/benchmark/zlib'
+                'parent_image=gcr.dockerproxy.com/fuzzbench/builders/benchmark/zlib'
             ],
             'depends_on': ['zlib-project-builder'],
             'dockerfile': 'fuzzers/coverage/builder.Dockerfile',
@@ -174,7 +174,7 @@ def test_generate_cloudbuild_spec_build_benchmark_coverage(experiment):
         'coverage-zlib-builder': {
             'build_arg': [
                 'benchmark=zlib', 'fuzzer=coverage',
-                'parent_image=gcr.io/fuzzbench/builders/coverage/'
+                'parent_image=gcr.dockerproxy.com/fuzzbench/builders/coverage/'
                 'zlib-intermediate'
             ],
             'depends_on': ['coverage-zlib-builder-intermediate'],
@@ -192,13 +192,13 @@ def test_generate_cloudbuild_spec_build_benchmark_coverage(experiment):
         'steps': [{
             'id': 'zlib-project-builder',
             'env': ['DOCKER_BUILDKIT=1'],
-            'name': 'gcr.io/cloud-builders/docker',
+            'name': 'gcr.dockerproxy.com/cloud-builders/docker',
             'args': [
                 'build', '--tag',
-                'gcr.io/fuzzbench/builders/benchmark/zlib:test-experiment',
-                '--tag', 'gcr.io/fuzzbench/builders/benchmark/zlib', '--tag',
-                'gcr.io/fuzzbench/builders/benchmark/zlib', '--cache-from',
-                'gcr.io/fuzzbench/builders/benchmark/zlib', '--build-arg',
+                'gcr.dockerproxy.com/fuzzbench/builders/benchmark/zlib:test-experiment',
+                '--tag', 'gcr.dockerproxy.com/fuzzbench/builders/benchmark/zlib', '--tag',
+                'gcr.dockerproxy.com/fuzzbench/builders/benchmark/zlib', '--cache-from',
+                'gcr.dockerproxy.com/fuzzbench/builders/benchmark/zlib', '--build-arg',
                 'BUILDKIT_INLINE_CACHE=1', '--file',
                 'benchmarks/zlib/Dockerfile', 'benchmarks/zlib'
             ],
@@ -206,17 +206,17 @@ def test_generate_cloudbuild_spec_build_benchmark_coverage(experiment):
         }, {
             'id': 'coverage-zlib-builder-intermediate',
             'env': ['DOCKER_BUILDKIT=1'],
-            'name': 'gcr.io/cloud-builders/docker',
+            'name': 'gcr.dockerproxy.com/cloud-builders/docker',
             'args': [
                 'build', '--tag',
-                'gcr.io/fuzzbench/builders/coverage/zlib-intermediate:'
+                'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib-intermediate:'
                 'test-experiment', '--tag',
-                'gcr.io/fuzzbench/builders/coverage/zlib-intermediate', '--tag',
-                'gcr.io/fuzzbench/builders/coverage/zlib-intermediate',
+                'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib-intermediate', '--tag',
+                'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib-intermediate',
                 '--cache-from',
-                'gcr.io/fuzzbench/builders/coverage/zlib-intermediate',
+                'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib-intermediate',
                 '--build-arg', 'BUILDKIT_INLINE_CACHE=1', '--build-arg',
-                'parent_image=gcr.io/fuzzbench/builders/benchmark/zlib',
+                'parent_image=gcr.dockerproxy.com/fuzzbench/builders/benchmark/zlib',
                 '--file', 'fuzzers/coverage/builder.Dockerfile',
                 'fuzzers/coverage'
             ],
@@ -224,46 +224,46 @@ def test_generate_cloudbuild_spec_build_benchmark_coverage(experiment):
         }, {
             'id': 'coverage-zlib-builder',
             'env': ['DOCKER_BUILDKIT=1'],
-            'name': 'gcr.io/cloud-builders/docker',
+            'name': 'gcr.dockerproxy.com/cloud-builders/docker',
             'args': [
                 'build', '--tag',
-                'gcr.io/fuzzbench/builders/coverage/zlib:test-experiment',
-                '--tag', 'gcr.io/fuzzbench/builders/coverage/zlib', '--tag',
-                'gcr.io/fuzzbench/builders/coverage/zlib', '--cache-from',
-                'gcr.io/fuzzbench/builders/coverage/zlib', '--build-arg',
+                'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib:test-experiment',
+                '--tag', 'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib', '--tag',
+                'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib', '--cache-from',
+                'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib', '--build-arg',
                 'BUILDKIT_INLINE_CACHE=1', '--build-arg', 'benchmark=zlib',
                 '--build-arg', 'fuzzer=coverage', '--build-arg',
-                'parent_image=gcr.io/fuzzbench/builders/coverage/'
+                'parent_image=gcr.dockerproxy.com/fuzzbench/builders/coverage/'
                 'zlib-intermediate', '--file',
                 'docker/benchmark-builder/Dockerfile', '.'
             ],
             'wait_for': ['coverage-zlib-builder-intermediate']
         }, {
             'name':
-                'gcr.io/cloud-builders/docker',
+                'gcr.dockerproxy.com/cloud-builders/docker',
             'args': [
                 'run', '-v', '/workspace/out:/host-out',
-                'gcr.io/fuzzbench/builders/coverage/zlib:test-experiment',
+                'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib:test-experiment',
                 '/bin/bash', '-c',
                 'cd /out; tar -czvf /host-out/coverage-build-zlib.tar.gz * '
                 '/src /work'
             ]
         }, {
             'name':
-                'gcr.io/cloud-builders/gsutil',
+                'gcr.dockerproxy.com/cloud-builders/gsutil',
             'args': [
                 '-m', 'cp', '/workspace/out/coverage-build-zlib.tar.gz',
                 'gs://experiment-data/test-experiment/coverage-binaries/'
             ]
         }],
         'images': [
-            'gcr.io/fuzzbench/builders/benchmark/zlib:test-experiment',
-            'gcr.io/fuzzbench/builders/benchmark/zlib',
-            'gcr.io/fuzzbench/builders/coverage/zlib-intermediate'
+            'gcr.dockerproxy.com/fuzzbench/builders/benchmark/zlib:test-experiment',
+            'gcr.dockerproxy.com/fuzzbench/builders/benchmark/zlib',
+            'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib-intermediate'
             ':test-experiment',
-            'gcr.io/fuzzbench/builders/coverage/zlib-intermediate',
-            'gcr.io/fuzzbench/builders/coverage/zlib:test-experiment',
-            'gcr.io/fuzzbench/builders/coverage/zlib'
+            'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib-intermediate',
+            'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib:test-experiment',
+            'gcr.dockerproxy.com/fuzzbench/builders/coverage/zlib'
         ]
     }
 
