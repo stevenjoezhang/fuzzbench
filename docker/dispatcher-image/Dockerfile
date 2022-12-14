@@ -21,6 +21,7 @@ WORKDIR $WORK
 
 # Install runtime dependencies for benchmarks, easy json parsing.
 RUN apt-get update -y && apt-get install -y \
+    libgl1-mesa-glx \
     rsync \
     jq \
     libglib2.0-0 \
